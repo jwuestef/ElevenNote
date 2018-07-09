@@ -14,6 +14,7 @@ namespace ElevenNote.Models
 
         [Display(Name = "Created")]
         public DateTimeOffset CreatedUtc { get; set; }
+        public int NoteId { get; set; }
 
         public override string ToString() => Title;
 

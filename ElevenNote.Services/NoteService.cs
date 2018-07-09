@@ -14,7 +14,7 @@ namespace ElevenNote.Services
 
         private readonly Guid _userId;
 
-
+        
 
         public NoteService(Guid userId)
         {
@@ -25,13 +25,14 @@ namespace ElevenNote.Services
 
         public bool CreateNote(NoteCreate model)
         {
-            var entity = new Note()
-            {
-                OwnerId = _userId,
-                Title = model.Title,
-                Content = model.Content,
-                CreatedUtc = DateTimeOffset.Now
-            };
+            var entity =
+                new Note()
+                {
+                    OwnerId = _userId,
+                    Title = model.Title,
+                    Content = model.Content,
+                    CreatedUtc = DateTimeOffset.Now
+                };
 
             using (var ctx = new ApplicationDbContext())
             {
@@ -46,21 +47,25 @@ namespace ElevenNote.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx
-                    .Notes
-                    .Where(e => e.OwnerId == _userId)
-                    .Select(
-                        e =>
-                            new NoteListItem
-                            {
-                                NoteId = e.NoteId,
-                                Title = e.Title,
-                                CreatedUtc = e.CreatedUtc
-                            }
-                    );
+                var query =
+                    ctx
+                        .Notes
+                        .Where(e => e.OwnerId == _userId)
+                        .Select(
+                            e =>
+                                new NoteListItem
+                                {
+                                    NoteId = e.NoteId,
+                                    Title = e.Title,
+                                    CreatedUtc = e.CreatedUtc
+                                }
+                        );
 
                 return query.ToArray();
             }
         }
+
+
+
     }
 }
